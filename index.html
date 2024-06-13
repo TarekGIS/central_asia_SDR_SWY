@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Using OpenLayers with Vite</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://js.arcgis.com/calcite-components/2.9.0/calcite.esm.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.9.0/calcite.css" />
+  </head>
+  <body>
+    <calcite-shell>
+      <!-- Header -->
+      <div class="headerPart" slot="header">
+        <div class="innerHeader">
+          <div class="logoPartContainer">
+            <img src="/assets/images/Logo.png" class="icona px-2 py-1" />
+            <h1 class="headerText">C4E AFRICA | Soil Water Erosion Mapping and Water Yield Mapping for Central Asia Using InVEST SDR and InVEST SWY</h1>
+          </div>
+          <div class="buttonPartContainer"></div>
+        </div>
+      </div>
+      <!-- Left Action Bar -->
+      <calcite-shell-panel slot="panel-start" position="start" width-scale="l" displayMode="true" id="shell-panel-start" collapsed>
+        <calcite-action-bar slot="action-bar">
+          <calcite-action-group id="homeGrp">
+            <calcite-action id="areaOfInterest" data-action-id="home" text="Home" icon="home"></calcite-action>
+            <calcite-tooltip reference-element="areaOfInterest" style="width: 200px; height: fit-content">
+              <span>Click to Zoom On the Area of Interest </span>
+            </calcite-tooltip>
+          </calcite-action-group>
+          <calcite-action-group id="layerGrp">
+            <calcite-action text="Layers" icon="layers" id="layerSelection" class="layers"></calcite-action>
+            <calcite-action text="Legened" icon="legend" id="legend" class="legend"></calcite-action>
+          </calcite-action-group>
+        </calcite-action-bar>
+      </calcite-shell-panel>
+
+      <!-- Right Action Bar -->
+      <calcite-shell-panel slot="panel-end" position="end" width-scale="s" displayMode="true" id="shell-shell-panel-end" collapsed>
+        <calcite-action-bar slot="action-bar">
+          <calcite-action-group id="layersGrp">
+            <calcite-action id="layerSwitcher" data-action-id="home" text="Home" icon="home"></calcite-action>
+            <calcite-tooltip reference-element="layerSwitcher" style="width: 200px; height: fit-content">
+              <span>Click to Zoom On the Area of Interest </span>
+            </calcite-tooltip>
+          </calcite-action-group>
+          <calcite-action-group id="layerGrp">
+            <calcite-action text="Layers" icon="layers" id="layerSelection" class="layers"></calcite-action>
+            <calcite-action text="Legened" icon="legend" id="legend" class="legend"></calcite-action>
+          </calcite-action-group>
+        </calcite-action-bar>
+      </calcite-shell-panel>
+
+      <!-- layerSelection -->
+      <calcite-shell-panel slot="panel-start" position="start" width-scale="m" class="hideData" id="layerSelectionPanel">
+        <calcite-panel heading="Layer Selection">
+          <!-- Accordion KZ -->
+          <calcite-accordion class="layerList mb-1" appearance="solid" icon-position="start" icon-type="chevron">
+            <calcite-accordion-item id="KZ_Layers" description="DEM, LULC, Actual Evapotranspiration..." heading="Kazakhstan">
+              <calcite-tree selection-mode="multichildren">
+                <calcite-tree-item class="AOIs" id="Kazakhstan_AD">Area of Interest</calcite-tree-item>
+
+                <calcite-tree-item class="DEMs" id="DEM_KZ">Digital Elevation Model</calcite-tree-item>
+                <calcite-tree-item class="LULCs" id="LULC_KZ">Land Use Land Cover</calcite-tree-item>
+                <calcite-tree-item class="HYSOGs" id="HYSOG_KZ">Hydrologic Soil Groups</calcite-tree-item>
+                <calcite-tree-item class="PETs" id="PET_KZ">
+                  Monthly Precipitation
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="PET_KZ_1">January</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_2">February</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_4">April</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_5">May</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_6">June</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_7">July</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_8">August</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_9">September</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_11">November</calcite-tree-item>
+                    <calcite-tree-item id="PET_KZ_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="PET_KZ" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+                <calcite-tree-item class="ET0s" id="ET0_KZ">
+                  Monthly Actual Evapotranspiration
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="ET0_KZ_1">January</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_2">February</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_4">April</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_5">May</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_6">June</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_7">July</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_8">August</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_9">September</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_11">November</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KZ_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="ET0_KZ" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+              </calcite-tree>
+            </calcite-accordion-item>
+          </calcite-accordion>
+
+          <!-- Accordion UZ -->
+          <calcite-accordion class="layerList mb-1" appearance="solid" icon-position="start" icon-type="chevron">
+            <calcite-accordion-item id="UZ_Layers" description="DEM, LULC, Actual Evapotranspiration..." heading="Uzbekistan">
+              <calcite-tree selection-mode="multichildren">
+                <calcite-tree-item class="AOIs" id="Uzbekistan_AD">Area of Interest</calcite-tree-item>
+
+                <calcite-tree-item class="DEMs" id="DEM_UZ">Digital Elevation Model</calcite-tree-item>
+                <calcite-tree-item class="LULCs" id="LULC_UZ">Land Use Land Cover</calcite-tree-item>
+                <calcite-tree-item class="HYSOGs" id="HYSOG_UZ">Hydrologic Soil Groups</calcite-tree-item>
+                <calcite-tree-item class="PETs" id="PET_UZ">
+                  Monthly Precipitation
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="PET_UZ_1">January</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_2">February</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_4">April</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_5">May</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_6">June</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_7">July</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_8">August</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_9">September</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_11">November</calcite-tree-item>
+                    <calcite-tree-item id="PET_UZ_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="PET_UZ" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+                <calcite-tree-item class="ET0s" id="ET0_UZ">
+                  Monthly Actual Evapotranspiration
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="ET0_UZ_1">January</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_2">February</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_4">April</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_5">May</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_6">June</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_7">July</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_8">August</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_9">September</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_11">November</calcite-tree-item>
+                    <calcite-tree-item id="ET0_UZ_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="ET0_UZ" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+              </calcite-tree>
+            </calcite-accordion-item>
+          </calcite-accordion>
+
+          <!-- Accordion TJ -->
+          <calcite-accordion class="layerList mb-1" appearance="solid" icon-position="start" icon-type="chevron">
+            <calcite-accordion-item id="TJ_Layers" description="DEM, LULC, Actual Evapotranspiration..." heading="Tajikistan">
+              <calcite-tree selection-mode="multichildren">
+                <calcite-tree-item class="AOIs" id="Tajikistan_AD">Area of Interest</calcite-tree-item>
+
+                <calcite-tree-item class="DEMs" id="DEM_TJ">Digital Elevation Model</calcite-tree-item>
+                <calcite-tree-item class="LULCs" id="LULC_TJ">Land Use Land Cover</calcite-tree-item>
+                <calcite-tree-item class="HYSOGs" id="HYSOG_TJ">Hydrologic Soil Groups</calcite-tree-item>
+                <calcite-tree-item class="PETs" id="PET_TJ">
+                  Monthly Precipitation
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="PET_TJ_1">January</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_2">February</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_4">April</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_5">May</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_6">June</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_7">July</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_8">August</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_9">September</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_11">November</calcite-tree-item>
+                    <calcite-tree-item id="PET_TJ_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="PET_TJ" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+                <calcite-tree-item class="ET0s" id="ET0_TJ">
+                  Monthly Actual Evapotranspiration
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="ET0_TJ_1">January</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_2">February</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_4">April</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_5">May</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_6">June</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_7">July</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_8">August</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_9">September</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_11">November</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TJ_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="ET0_TJ" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+              </calcite-tree>
+            </calcite-accordion-item>
+          </calcite-accordion>
+
+          <!-- Accordion TM -->
+          <calcite-accordion class="layerList mb-1" appearance="solid" icon-position="start" icon-type="chevron">
+            <calcite-accordion-item id="TM_Layers" description="DEM, LULC, Actual Evapotranspiration..." heading="Turkmenistan">
+              <calcite-tree selection-mode="multichildren">
+                <calcite-tree-item class="AOIs" id="Turkmenistan_AD">Area of Interest</calcite-tree-item>
+
+                <calcite-tree-item class="DEMs" id="DEM_TM">Digital Elevation Model</calcite-tree-item>
+                <calcite-tree-item class="LULCs" id="LULC_TM">Land Use Land Cover</calcite-tree-item>
+                <calcite-tree-item class="HYSOGs" id="HYSOG_TM">Hydrologic Soil Groups</calcite-tree-item>
+                <calcite-tree-item class="PETs" id="PET_TM">
+                  Monthly Precipitation
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="PET_TM_1">January</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_2">February</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_4">April</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_5">May</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_6">June</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_7">July</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_8">August</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_9">September</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_11">November</calcite-tree-item>
+                    <calcite-tree-item id="PET_TM_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="PET_TM" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+                <calcite-tree-item class="ET0s" id="ET0_TM">
+                  Monthly Actual Evapotranspiration
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="ET0_TM_1">January</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_2">February</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_4">April</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_5">May</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_6">June</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_7">July</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_8">August</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_9">September</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_11">November</calcite-tree-item>
+                    <calcite-tree-item id="ET0_TM_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="ET0_TM" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+              </calcite-tree>
+            </calcite-accordion-item>
+          </calcite-accordion>
+          <!-- Accordion KG -->
+          <calcite-accordion class="layerList mb-1" appearance="solid" icon-position="start" icon-type="chevron">
+            <calcite-accordion-item id="KG_Layers" description="DEM, LULC, Actual Evapotranspiration..." heading="Kyrgyzstan">
+              <calcite-tree selection-mode="multichildren">
+                <calcite-tree-item class="AOIs" id="Kyrgyzstan_AD">Area of Interest</calcite-tree-item>
+
+                <calcite-tree-item class="DEMs" id="DEM_KG">Digital Elevation Model</calcite-tree-item>
+                <calcite-tree-item class="LULCs" id="LULC_KG">Land Use Land Cover</calcite-tree-item>
+                <calcite-tree-item class="HYSOGs" id="HYSOG_KG">Hydrologic Soil Groups</calcite-tree-item>
+                <calcite-tree-item class="PETs" id="PET_KG">
+                  Monthly Precipitation
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="PET_KG_1">January</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_2">February</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_4">April</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_5">May</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_6">June</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_7">July</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_8">August</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_9">September</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_11">November</calcite-tree-item>
+                    <calcite-tree-item id="PET_KG_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="PET_KG" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+                <calcite-tree-item class="ET0s" id="ET0_KG">
+                  Monthly Actual Evapotranspiration
+                  <calcite-tree slot="children">
+                    <calcite-tree-item id="ET0_KG_1">January</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_2">February</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_3">Mars</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_4">April</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_5">May</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_6">June</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_7">July</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_8">August</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_9">September</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_10">Octobre</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_11">November</calcite-tree-item>
+                    <calcite-tree-item id="ET0_KG_12">December</calcite-tree-item>
+                  </calcite-tree>
+                  <calcite-tooltip reference-element="ET0_KG" overlay-positioning="absolute" placement="top" close-on-click="true">
+                    <span>Click Here To Select/Deselect All</span>
+                  </calcite-tooltip>
+                </calcite-tree-item>
+              </calcite-tree>
+            </calcite-accordion-item>
+          </calcite-accordion>
+
+          <calcite-button id="clearAllButton" width="half" slot="footer" appearance="outline-fill"> Clear All </calcite-button>
+          <calcite-button id="addToMap" width="half" slot="footer" appearance="fill"> Add to Map </calcite-button>
+        </calcite-panel>
+      </calcite-shell-panel>
+      <!-- Legend -->
+      <calcite-shell-panel slot="panel-start" position="start" width-scale="m" class="hideData" id="legendPanel">
+        <calcite-panel heading="Legend">
+          <div id="legendTitle"></div>
+          <div id="legendContent"></div>
+
+          <calcite-button id="clearAllButton" width="full" slot="footer" appearance="outline-fill"> Clear All </calcite-button>
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <!-- Map DIV -->
+      <div id="map" style="position: relative">
+        <calcite-loader id="map-loader"></calcite-loader>
+        <div id="searchBarContainer">
+          <calcite-input-text icon="search" placeholder="Enter your region" id="searchBar" clearable></calcite-input-text>
+        </div>
+      </div>
+    </calcite-shell>
+
+    <script type="module" src="./map.js"></script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

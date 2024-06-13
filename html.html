@@ -1,0 +1,51 @@
+<calcite-accordion class="layerList mb-1" appearance="solid" icon-position="start" icon-type="chevron">
+  <calcite-accordion-item id="KG_Layers" description="DEM, LULC, Actual Evapotranspiration..." heading="Kyrgyzstan">
+    <calcite-tree selection-mode="multichildren">
+      <calcite-tree-item class="AOIs" id="AOI_KG">Area of Interest</calcite-tree-item>
+
+      <calcite-tree-item class="DEMs" id="DEM_KG">Digital Elevation Model</calcite-tree-item>
+      <calcite-tree-item class="LULCs" id="LULC_KG">Land Use Land Cover</calcite-tree-item>
+      <calcite-tree-item class="HYSOGs" id="HYSOG_KG">Hydrologic Soil Groups</calcite-tree-item>
+      <calcite-tree-item class="PETs" id="PET_KG">
+        Monthly Precipitation
+        <calcite-tree slot="children">
+          <calcite-tree-item id="PET_KG_1">January</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_2">February</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_3">Mars</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_4">April</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_5">May</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_6">June</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_7">July</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_8">August</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_9">September</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_10">Octobre</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_11">November</calcite-tree-item>
+          <calcite-tree-item id="PET_KG_12">December</calcite-tree-item>
+        </calcite-tree>
+        <calcite-tooltip reference-element="PET_KG" overlay-positioning="absolute" placement="top" close-on-click="true">
+          <span>Click Here To Select/Deselect All</span>
+        </calcite-tooltip>
+      </calcite-tree-item>
+      <calcite-tree-item class="ET0s" id="ET0_KG">
+        Monthly Actual Evapotranspiration
+        <calcite-tree slot="children">
+          <calcite-tree-item id="ET0_KG_1">January</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_2">February</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_3">Mars</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_4">April</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_5">May</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_6">June</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_7">July</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_8">August</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_9">September</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_10">Octobre</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_11">November</calcite-tree-item>
+          <calcite-tree-item id="ET0_KG_12">December</calcite-tree-item>
+        </calcite-tree>
+        <calcite-tooltip reference-element="ET0_KG" overlay-positioning="absolute" placement="top" close-on-click="true">
+          <span>Click Here To Select/Deselect All</span>
+        </calcite-tooltip>
+      </calcite-tree-item>
+    </calcite-tree>
+  </calcite-accordion-item>
+</calcite-accordion>

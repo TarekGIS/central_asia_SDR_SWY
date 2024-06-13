@@ -1,0 +1,79 @@
+@import 'node_modules/ol/ol.css';
+@import 'node_modules/ol-ext/dist/ol-ext.css';
+@import 'node_modules/@esri/calcite-components/dist/calcite/calcite.css';
+@import 'node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+html,
+body,
+#map {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div {
+  display: block;
+  unicode-bidi: isolate;
+}
+
+h1 {
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
+}
+
+#map-loader {
+  position: absolute;
+  z-index: 1;
+  display: none;
+}
+
+#searchBarContainer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 300px;
+  z-index: 1;
+}
+
+.hideData {
+  display: none;
+}
+
+.showData {
+  display: flex;
+}
+
+.headerPart {
+  display: block;
+  unicode-bidi: isolate-override;
+}
+
+.innerHeader {
+  display: flex;
+  max-height: 52px;
+}
+
+.logoPartContainer .buttonPartContainer {
+  display: flex;
+}
+
+.icona {
+  height: 3rem;
+  padding: 2px 5px 2px 0.5rem;
+}
+
+.headerText {
+  display: inline;
+  margin: auto 0;
+  font-size: 1.17em;
+}

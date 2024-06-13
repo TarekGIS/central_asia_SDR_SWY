@@ -1,0 +1,21 @@
+{
+  "name": "ol_nodejs",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "ol-ext": "^4.0.18",
+    "rollup-plugin-copy": "^3.5.0",
+    "vite": "^5.2.11",
+    "vite-plugin-static-copy": "^1.0.5"
+  },
+  "dependencies": {
+    "@esri/calcite-components": "^2.9.0",
+    "bootstrap": "^5.3.3",
+    "jquery": "^3.7.1",
+    "ol": "latest"
+  }
+}
