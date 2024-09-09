@@ -13,7 +13,7 @@
     "vite-plugin-static-copy": "^1.0.5"
   },
   "dependencies": {
-    "@esri/calcite-components": "^2.9.0",
+    "@esri/calcite-components": "^2.12.1",
     "bootstrap": "^5.3.3",
     "jquery": "^3.7.1",
     "ol": "latest"
